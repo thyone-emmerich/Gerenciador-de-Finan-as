@@ -57,10 +57,27 @@ def adicionar_transacao(transacoes):
         'tipo': tipo,
     }
     
-    # ESTAS LINHAS AGORA ESTÃO DENTRO DA FUNÇÃO, CORRETAMENTE INDENTADAS
     transacoes.append(nova_transacao)
     salvar_transacoes(transacoes)
     print("\nTransação adicionada com sucesso!")
+
+def exibir_extrato(transacoes):
+    print("\n--- Extrato de Transações ---")
+
+    if not transacoes:
+        print("Nenhuma transação registrada ainda.")
+        return
+    
+    print(f"{'Descrição':<30} {'Valor':>15} {'Tipo':>10}")
+    print("-" * 55)
+
+    for t in transacoes:
+        valor_formatado = f'R${t['valor']:.2f}'
+        print(f"{t['descricao']:<30} {valor_formatado:>15} {t['tipo'].capitalize():>10}")
+
+        print("-" * 55)   
+
+
 
 
 # --- Lógica principal do programa ---
@@ -69,7 +86,7 @@ if __name__ == '__main__':
 
     menu_acoes = {
         '1': adicionar_transacao, # Agora aponta para a função de verdade
-        '2': 'Exibir Extrato',    # Placeholder
+        '2': exibir_extrato,    # Placeholder
         '3': 'Calcular Saldo',    # Placeholder
         '4': 'Sair',
     }

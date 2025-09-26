@@ -18,5 +18,10 @@
         "descricao": "Mercado",
         "valor": 250.0,
         "tipo": "despesa"
+    },
+    {
+        "descricao": "Roupas",
+        "valor": 300.0,
+        "tipo": "despesa"
     }
 ]
