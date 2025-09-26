@@ -1,0 +1,22 @@
+[
+    {
+        "descricao": "Salário Mensal",
+        "valor": 3000.0,
+        "tipo": "receita"
+    },
+    {
+        "descricao": "Conta de Luz",
+        "valor": 150.5,
+        "tipo": "despesa"
+    },
+    {
+        "descricao": "Mercado",
+        "valor": 450.0,
+        "tipo": "despesa"
+    },
+    {
+        "descricao": "Mercado",
+        "valor": 250.0,
+        "tipo": "despesa"
+    }
+]
