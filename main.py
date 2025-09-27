@@ -77,6 +77,23 @@ def exibir_extrato(transacoes):
 
         print("-" * 55)   
 
+def calcular_saldo(transacoes):
+    print("\n--- Saldo Atual ---")
+
+    if not transacoes:
+        print('Não há nenhuma transação registrada.')
+        return
+
+    saldo_atualizado = 0.0
+
+    for t in transacoes:
+        if t['tipo'] == 'receita':
+            saldo_atualizado += t['valor']
+        elif t['tipo'] == 'despesa':
+            saldo_atualizado -= t['valor']
+
+    saldo_formatado = f'R${saldo_atualizado:.2f}'
+    print(f'Seu saldo atual é de: {saldo_formatado}')
 
 
 
@@ -85,9 +102,9 @@ if __name__ == '__main__':
     todas_as_transacoes = carregar_transacoes()
 
     menu_acoes = {
-        '1': adicionar_transacao, # Agora aponta para a função de verdade
-        '2': exibir_extrato,    # Placeholder
-        '3': 'Calcular Saldo',    # Placeholder
+        '1': adicionar_transacao, 
+        '2': exibir_extrato,    
+        '3': calcular_saldo,    
         '4': 'Sair',
     }
 
