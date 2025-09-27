@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Gerenciador de Finanças</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; background-color: #f9f9f9; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        thead { background-color: #f2f2f2; }
+        tbody tr:nth-child(even) { background-color: #f9f9f9; }
+        tbody tr:hover { background-color: #f1f1f1; }
+    </style>
+</head>
+<body>
+    <h1>Extrato de Transações</h1>
+    <h2>Adicionar Nova Transação</h2>
+    <form action="/adicionar" method="post">
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" required>
+
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" name="valor" required>
+
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo">
+            <option value="receita">Receita</option>
+            <option value="despesa">Despesa</option>
+        </select>
+
+        <button type="submit">Adicionar</button>
+    </form>
+    <hr>```
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transacao in transacoes %}
+            <tr>
+                <td>{{ transacao.descricao }}</td>
+                <td>R$ {{ "%.2f"|format(transacao.valor) }}</td>
+                <td>{{ transacao.tipo.capitalize() }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

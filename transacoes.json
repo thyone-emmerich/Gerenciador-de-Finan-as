@@ -23,5 +23,10 @@
         "descricao": "Cookies",
         "valor": 110.0,
         "tipo": "receita"
+    },
+    {
+        "descricao": "Lanche",
+        "valor": 85.0,
+        "tipo": "despesa"
     }
 ]
