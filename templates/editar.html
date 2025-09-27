@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Transação</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; background-color: #f9f9f9; }
+        h1 { color: #333; }
+        form { margin-top: 1em; padding: 1.5em; border: 1px solid #eee; border-radius: 5px; background-color: #fff; display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin-left: auto; margin-right: auto;}
+        form label { font-weight: bold; margin-bottom: 5px; }
+        form input[type="text"], form input[type="number"], form select { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
+        form button[type="submit"] { background-color: #008CBA; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; margin-top: 10px; }
+        form button[type="submit"]:hover { background-color: #007bb5; }
+        a.cancel-button { display: block; text-align: center; margin-top: 1em; color: #555; text-decoration: none; }
+        a.cancel-button:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Editar Transação</h1>
+
+    <form action="/atualizar/{{ indice }}" method="post">
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" value="{{ transacao.descricao }}" required>
+
+        <label for="valor">Valor:</label>
+        <input type="number" step="0.01" id="valor" name="valor" value="{{ transacao.valor }}" required>
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo">
+            <option value="receita" {% if transacao.tipo == 'receita' %} selected {% endif %}>Receita</option>
+            <option value="despesa" {% if transacao.tipo == 'despesa' %} selected {% endif %}>Despesa</option>
+        </select>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+    <a href="/" class="cancel-button">Cancelar</a>
+</body>
+</html>

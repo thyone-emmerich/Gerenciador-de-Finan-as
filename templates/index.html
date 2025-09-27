@@ -32,13 +32,14 @@
         <button type="submit">Adicionar</button>
     </form>
     <hr>```
-    
+
     <table>
         <thead>
             <tr>
                 <th>Descrição</th>
                 <th>Valor</th>
                 <th>Tipo</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +48,12 @@
                 <td>{{ transacao.descricao }}</td>
                 <td>R$ {{ "%.2f"|format(transacao.valor) }}</td>
                 <td>{{ transacao.tipo.capitalize() }}</td>
+                <td>
+                    <form action="/excluir/{{ loop.index0 }}" method="post" style="display:inline;">
+                        <button type="submit" class="action-button">Excluir</button>
+                    </form>
+                    <a href="/editar/{{ loop.index0 }}" class="edit-button">Editar</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
