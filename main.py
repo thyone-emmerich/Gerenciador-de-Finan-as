@@ -31,9 +31,39 @@ def exibir_menu():
     print("1. Adicionar Transação")
     print("2. Exibir Extrato")
     print("3. Calcular Saldo")
-    print("4. Excluir transação")
-    print("5. Sair")
+    print("4. Excluir Transação")
+    print("5. Editar Transação")
+    print("6. Sair")
     print("---------------------------------------")
+
+
+
+
+def coletar_valor_valido():
+    while True:
+        try:
+            valor_str = input('Digite um valor: ')
+            valor = float(valor_str)
+
+            if valor <= 0:
+                print('Digite um valor positivo.')
+            else:
+                return valor
+
+        except ValueError:
+            print('Valor Inválido. Digite um número.')
+
+
+
+
+def coletar_tipo_valido():
+    while True:
+        tipo = input('Digite o tipo de transação: "receita" ou "despesa" ').lower()
+
+        if tipo in ['receita', 'desepesa']:
+            return tipo
+        else:
+            print('Digite um tipo válido.')
 
 
 
@@ -41,25 +71,10 @@ def exibir_menu():
 def adicionar_transacao(transacoes):
     """Solicita os dados de uma nova transação ao usuário e a adiciona à lista."""
     print("\n--- Adicionar Nova Transação ---")
+    
     descricao = input('Descreva a transação: ')
-
-    while True:
-        try:
-            valor_str = input('Digite o valor: ')
-            valor = float(valor_str)
-            if valor <= 0:
-                print('O valor deve ser positivo!')
-            else:
-                break
-        except ValueError:
-            print('Valor inválido! Por favor, digite um número (ex: 50 ou 12.30).')
-
-    while True:
-        tipo = input('Qual foi o tipo de transação? Digite "receita" ou "despesa": ').lower()
-        if tipo in ['receita', 'despesa']:
-            break
-        else:
-            print('Tipo de transação inválida. Vamos tentar novamente...')
+    valor = coletar_valor_valido()
+    tipo = coletar_tipo_valido()
 
     nova_transacao = {
         'descricao': descricao,
@@ -148,16 +163,84 @@ def excluir_transacao(transacoes):
 
 
 
+def editar_transacao(transacoes):
+    print("\n--- Editar Transação ---")
+    
+    if not transacoes:
+        print("Nenhuma transação para editar.")
+        return
+
+    exibir_extrato(transacoes)
+
+    try:
+        num_para_editar = int(input("Digite o número da transação que deseja editar (ou 0 para cancelar): "))
+
+        if num_para_editar == 0:
+            print("Operação de edição cancelada.")
+            return
+        
+        if 1 <= num_para_editar <= len(transacoes):
+            indice = num_para_editar - 1
+            transacao_selecionada = transacoes[indice]
+
+            print("\nVocê selecionou a transação:")
+            print(f"  Descrição: {transacao_selecionada['descricao']}")
+            print(f"  Valor: R$ {transacao_selecionada['valor']:.2f}")
+            print(f"  Tipo: {transacao_selecionada['tipo']}")
+
+            while True:
+                print("\nO que você deseja editar?")
+                print("1. Descrição")
+                print("2. Valor")
+                print("3. Tipo")
+                print("4. Cancelar")
+                
+                escolha = input("Escolha uma opção: ")
+
+                if escolha == '1':
+                    nova_descricao = input("Digite a nova descrição: ")
+                    transacao_selecionada['descricao'] = nova_descricao
+                    break
+                elif escolha == '2':
+                    novo_valor = coletar_valor_valido() # Reutilizando nossa função ajudante!
+                    transacao_selecionada['valor'] = novo_valor
+                    break
+                elif escolha == '3':
+                    novo_tipo = coletar_tipo_valido() # Reutilizando nossa função ajudante!
+                    transacao_selecionada['tipo'] = novo_tipo
+                    break
+                elif escolha == '4':
+                    print("Edição cancelada.")
+                    return
+                else:
+                    print("Opção inválida. Tente novamente.")
+            
+            salvar_transacoes(transacoes)
+            print("\nTransação atualizada com sucesso!")
+
+        else:
+            print("Número de transação inválido.")
+
+    except ValueError:
+        print("Entrada inválida. Por favor, digite apenas um número.")
+
+    except ValueError:
+        print("Entrada inválida. Por favor, digite apenas um número.")
+
+
+
+# --- Lógica principal do programa ---
 # --- Lógica principal do programa ---
 if __name__ == '__main__':
     todas_as_transacoes = carregar_transacoes()
 
     menu_acoes = {
-        '1': adicionar_transacao, 
-        '2': exibir_extrato,    
+        '1': adicionar_transacao,
+        '2': exibir_extrato,
         '3': calcular_saldo,
         '4': excluir_transacao,
-        '5': 'Sair',
+        '5': editar_transacao, # Nova função adicionada
+        '6': 'Sair',
     }
 
     while True:
@@ -165,13 +248,13 @@ if __name__ == '__main__':
         opcao = input('Escolha uma opção: ')
 
         if opcao in menu_acoes:
-            if opcao == '5':
+            if opcao == '6': # Condição de saída agora é '6'
                 print('Saindo do programa. Até logo!')
                 break
             else:
                 acao_escolhida = menu_acoes[opcao]
                 if callable(acao_escolhida):
-                    acao_escolhida(todas_as_transacoes) # Passa a lista de transações para a função
+                    acao_escolhida(todas_as_transacoes)
                 else:
                     print(f'Você escolheu: {acao_escolhida}. (Funcionalidade a ser implementada!)')
         else:
