@@ -5,11 +5,6 @@
         "tipo": "receita"
     },
     {
-        "descricao": "Conta de Luz",
-        "valor": 150.5,
-        "tipo": "despesa"
-    },
-    {
         "descricao": "Mercado",
         "valor": 450.0,
         "tipo": "despesa"
@@ -23,5 +18,10 @@
         "descricao": "Roupas",
         "valor": 300.0,
         "tipo": "despesa"
+    },
+    {
+        "descricao": "Cookies",
+        "valor": 150.0,
+        "tipo": "receita"
     }
 ]

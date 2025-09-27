@@ -14,10 +14,16 @@ def carregar_transacoes():
         print(f"Atenção: O arquivo '{NOME_ARQUIVO}' está vazio ou corrompido. Iniciando com transações vazias.")
         return []
 
+
+
+
 def salvar_transacoes(transacoes):
     """Esta função salva uma lista de transações no arquivo JSON."""
     with open(NOME_ARQUIVO, 'w', encoding='utf-8') as f:
         json.dump(transacoes, f, indent=4, ensure_ascii=False)
+
+
+
 
 def exibir_menu():
     """Exibe as opções do menu principal para o usuário."""
@@ -25,8 +31,12 @@ def exibir_menu():
     print("1. Adicionar Transação")
     print("2. Exibir Extrato")
     print("3. Calcular Saldo")
-    print("4. Sair")
+    print("4. Excluir transação")
+    print("5. Sair")
     print("---------------------------------------")
+
+
+
 
 def adicionar_transacao(transacoes):
     """Solicita os dados de uma nova transação ao usuário e a adiciona à lista."""
@@ -61,6 +71,9 @@ def adicionar_transacao(transacoes):
     salvar_transacoes(transacoes)
     print("\nTransação adicionada com sucesso!")
 
+
+
+
 def exibir_extrato(transacoes):
     print("\n--- Extrato de Transações ---")
 
@@ -68,14 +81,17 @@ def exibir_extrato(transacoes):
         print("Nenhuma transação registrada ainda.")
         return
     
-    print(f"{'Descrição':<30} {'Valor':>15} {'Tipo':>10}")
-    print("-" * 55)
+    print(f"{'#':<3} {'Descrição':<30} {'Valor':>15} {'Tipo':>10}")
+    print("-" * 60)
 
-    for t in transacoes:
-        valor_formatado = f'R${t['valor']:.2f}'
-        print(f"{t['descricao']:<30} {valor_formatado:>15} {t['tipo'].capitalize():>10}")
+    for numero, t in enumerate(transacoes, start=1):
+        valor_formatado = f"R$ {t['valor']:.2f}" 
+        print(f"{numero:<3} {t['descricao']:<30} {valor_formatado:>15} {t['tipo'].capitalize():>10}")
+    
+    print("-" * 60)  
 
-        print("-" * 55)   
+
+
 
 def calcular_saldo(transacoes):
     print("\n--- Saldo Atual ---")
@@ -97,6 +113,41 @@ def calcular_saldo(transacoes):
 
 
 
+
+def excluir_transacao(transacoes):
+    print("\n--- Excluir Transação ---")
+    
+    if not transacoes:
+        print('Não há transações para exibir.')
+        return
+    
+    exibir_extrato(transacoes)
+    
+    while True:
+        try:
+            num_para_excluir_str = input('Digite o número da transação a ser excluída: ')
+            num_para_excluir = int(num_para_excluir_str)
+
+            if num_para_excluir == 0:
+                print('Operação de exlusão cancelada!')
+
+            if 1 <= num_para_excluir <= len(transacoes):
+                indice_para_excluir = num_para_excluir - 1
+
+                transacao_removida = transacoes.pop(indice_para_excluir)
+
+                salvar_transacoes(transacoes)
+
+                print(f"\nTransação '{transacao_removida['descricao']}' foi excluída com sucesso!")
+                break
+            else:
+                print("Número inválido. Por favor, digite um número da lista.")
+
+        except ValueError:
+            print("Entrada inválida. Por favor, digite apenas um número.")
+
+
+
 # --- Lógica principal do programa ---
 if __name__ == '__main__':
     todas_as_transacoes = carregar_transacoes()
@@ -104,8 +155,9 @@ if __name__ == '__main__':
     menu_acoes = {
         '1': adicionar_transacao, 
         '2': exibir_extrato,    
-        '3': calcular_saldo,    
-        '4': 'Sair',
+        '3': calcular_saldo,
+        '4': excluir_transacao,
+        '5': 'Sair',
     }
 
     while True:
@@ -113,7 +165,7 @@ if __name__ == '__main__':
         opcao = input('Escolha uma opção: ')
 
         if opcao in menu_acoes:
-            if opcao == '4':
+            if opcao == '5':
                 print('Saindo do programa. Até logo!')
                 break
             else:
