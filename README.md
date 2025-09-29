@@ -3,7 +3,6 @@
 [![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-2.x-green?logo=flask)](https://flask.palletsprojects.com/)
 [![SQLite](https://img.shields.io/badge/SQL-SQLite-orange?logo=sqlite)](https://www.sqlite.org/)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.x-purple?logo=bootstrap)](https://getbootstrap.com/)
 
 Uma aplicação web simples para controle de finanças pessoais, desenvolvida com Flask para aprendizado dos fundamentos de desenvolvimento web back-end.
 
