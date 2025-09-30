@@ -39,4 +39,3 @@ Passos para Execução
     Clone o repositório:
 
 git clone https://github.com/thyone-emmerich/Gerenciador-de-Finan-as.git
-
